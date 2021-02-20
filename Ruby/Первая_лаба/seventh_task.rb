@@ -1,20 +1,11 @@
-def is_simple?(number)
-	(2..number-1).each do |div| 
-		return false if number%div == 0
+def mult_digit_not_divisible_five(string_number)
+	mult = 1
+	string_number.to_s.split('').each do |el| 
+		mult *= el.to_i if el.to_i % 5 != 0
 	end
-	true
+	mult
 end
 
 
-def get_max_simple_div(number)
-	current_max_div = 1
-	(1..number).each do |div|
-		if number%div == 0 && is_simple?(div) && div > current_max_div
-			current_max_div = div
-		end
-	end
-	current_max_div
-end
-
-
-puts get_max_simple_div(ARGV[0].to_i)
+number = ARGV[0].to_i
+puts mult_digit_not_divisible_five(number)
