@@ -1,8 +1,10 @@
 puts 'Какой ваш любимый язык?'
 lang = gets.chomp.downcase 
 
-unless lang == 'ruby'
-	puts 'Скоро будет Ruby'
-else
+if lang == 'ruby'
 	puts 'Подлиза'
+elsif lang == '1c'
+	puts 'Ясно...'
+else
+	puts 'Скоро будет Ruby'
 end
