@@ -1,4 +1,5 @@
-puts 'Какой ваш любимый язык?'
+puts 'Ваш любимый язык?'
 lang = gets.chomp.downcase 
 
-lang == 'ruby' ? puts('Подлиза'): puts('Скоро будет Ruby')
+s = if lang == 'ruby' then 'Подлиза' else 'Скоро будет Ruby' end
+puts s
