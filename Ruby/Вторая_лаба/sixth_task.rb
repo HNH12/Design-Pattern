@@ -11,25 +11,28 @@ def read_file(path)
 end
 
 
-def get_elements_before_min(arr)
-	index_min = 0
-	min = arr[0]
+def get_elements_after_max(arr)
+	index_max = 0
+	max = arr[0]
 	for i in 0..arr.size-1
-		if arr[i] <= min
-			index_min = i
-			min = arr[i]
+		if arr[i] > max
+			puts i
+			index_max = i
+			max = arr[i]
 		end
 	end
-	index_min
+	index_max
 end
 
 
 path = "file.txt"
 arr = read_file(path)
 
-index_last_min_elem = get_elements_before_min(arr)-1
-if  index_last_min_elem > -1
-	print arr[0..index_last_min_elem]
+
+print arr
+index_first_max_elem = get_elements_after_max(arr)+1
+if  index_first_max_elem < arr.size
+	print arr[index_first_max_elem..]
 else
 	print []
 end
