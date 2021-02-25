@@ -1,6 +1,6 @@
 def read_array(arr, count_el) 
 	for i in 0..count_el-1
-		arr.push($stdin.gets.to_i)
+		arr[i] = $stdin.gets.to_i
 	end
 end
 
