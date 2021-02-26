@@ -1,25 +1,11 @@
-def falls_within_interval?(numb, range)
-	if numb >= range[0] && numb <= range[1]
-		return true
-	end
-	return false
-end	
-
-
-def get_sum(arr, range)
-	sum = 0
-	arr.each do |el|
-		if falls_within_interval?(el, range)
-			sum += el
+def get_elem_more_sum_prev(arr)
+	new_arr = []
+	for i in 1..arr.size-1
+		if arr[i] > arr[0..i-1].sum()
+			new_arr.push(arr[i])
 		end
 	end
-	return sum
-end
-
-
-def to_range(str)
-	arr_interval = str.split('..').map { |el|  el.to_i}
-	return arr_interval
+	new_arr
 end
 
 
@@ -39,5 +25,4 @@ end
 path = "file.txt"
 arr = read_file(path)
 
-arr_interval = to_range(ARGV[0])	
-print get_sum(arr, arr_interval)
+print get_elem_more_sum_prev(arr).size
