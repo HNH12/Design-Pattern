@@ -1,3 +1,28 @@
+def falls_within_interval?(numb, range)
+	if numb >= range[0] && numb <= range[1]
+		return true
+	end
+	return false
+end	
+
+
+def get_sum(arr, range)
+	sum = 0
+	arr.each do |el|
+		if falls_within_interval?(el, range)
+			sum += el
+		end
+	end
+	return sum
+end
+
+
+def to_range(str)
+	arr_interval = str.split('..').map { |el|  el.to_i}
+	return arr_interval
+end
+
+
 def read_file(path) 
 	file = File.open(path)
 	arr = []
@@ -11,16 +36,8 @@ def read_file(path)
 end
 
 
-def is_alternating?(arr)
-	for i in 1..arr.size-1
-		if (arr[i] > 0 && arr[i-1] > 0) || (arr[i] < 0 && arr[i-1] < 0)
-			return false
-		end
-	end
-	true
-end
-
-
 path = "file.txt"
 arr = read_file(path)
-puts is_alternating?(arr)
+
+arr_interval = to_range(ARGV[0])	
+print get_sum(arr, arr_interval)
