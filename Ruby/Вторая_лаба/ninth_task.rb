@@ -1,3 +1,3 @@
 str = gets.chomp.split(' ')
 
-puts str.shuffle.join(' ')
+puts str.inject(0) { |sum, el| el.size.even? ? sum += 1 : sum }
