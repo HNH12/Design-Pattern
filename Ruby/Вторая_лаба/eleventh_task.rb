@@ -1,5 +1,10 @@
-arr_char = "апр п р авы а п s d ew e ё".split('')
+arr_char = "asd ds da AZ da sd фыв фыв фа".split('')
 
-puts (arr_char.select do |symb| 
-		((symb.downcase >= 'а') && (symb.downcase <= 'я')) || (symb.downcase == 'ё')
-	end).size
+print (arr_char.select do |symb| 
+		((symb.downcase >= 'a') && (symb.downcase <= 'z'))
+	end).uniq
+
+
+str = "asd ds da AZ da sd фыв фыв фа"
+puts
+print str.scan(/[A-z]/).uniq
