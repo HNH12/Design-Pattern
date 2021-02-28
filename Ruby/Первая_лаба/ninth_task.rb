@@ -2,28 +2,22 @@ require 'prime'
 
 
 def get_max_digit_number(number)
-	number.to_s.split('').max
+	number.digits.max
 end
 
 
 def get_min_digit_number(number)
-	number.to_s.split('').min
+	number.digits.min
 end
 
 
 def get_sum_digits(number)
-	sum = 0
-	number.to_s.split('').each{|el| sum += el.to_i}
-	sum
+	number.digits.reduce(:+)
 end
 
 
-def get_mult_digit_number(number)
-	return 0 if number == 0
-
-	mult = 1
-	number.to_s.split('').each{|el| mult *= el.to_i}
-	mult
+def get_mult_digits(number)
+	number.digits.inject(:*)
 end
 
 
@@ -39,11 +33,7 @@ end
 
 
 def get_mult_digit_not_divisible_five(number)
-	mult = 1
-	number.to_s.split('').each do |el| 
-		mult *= el.to_i if el.to_i % 5 != 0
-	end
-	mult
+	number.digits.inject(1) { |mult, el| el % 5 != 0 ? mult *= el : mult }
 end
 
 
@@ -60,20 +50,8 @@ def get_max_simple_odd_div(number)
 end
 
 
-def get_nod(first_num, second_num)
-	while(first_num != second_num) do
-		if first_num > second_num
-			first_num -= second_num
-		else
-			second_num -= first_num
-		end
-	end
-	first_num
-end
-
-
 def get_nod_by_task(number)
-	get_nod(get_max_simple_odd_div(number), get_mult_digit_number(number))
+	get_max_simple_odd_div(number).gcd(get_mult_digits(number))
 end
 
 
