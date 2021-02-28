@@ -11,28 +11,22 @@ end
 
 
 def get_max_digit_number(number)
-	number.to_s.split('').max
+	number.digits.max
 end
 
 
 def get_min_digit_number(number)
-	number.to_s.split('').min
+	number.digits.min
 end
 
 
 def get_sum_digits(number)
-	sum = 0
-	number.to_s.split('').each{|el| sum += el.to_i}
-	sum
+	number.digits.reduce(:+)
 end
 
 
-def get_mult_digit_number(number)
-	return 0 if number == 0
-
-	mult = 1
-	number.to_s.split('').each{|el| mult *= el.to_i}
-	mult
+def get_mult_digits(number)
+	number.digits.inject(:*)
 end
 
 
