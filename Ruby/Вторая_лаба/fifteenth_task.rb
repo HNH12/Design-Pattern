@@ -23,26 +23,9 @@ def get_frequency_in_text(lines, char)
 end
 
 
-def get_difference_by_task(lines, str)
-	str_lines = lines.join("")
-
-	most_frequent_char_in_str, char_frequecy_in_str = get_most_frequent_character_in_string(str)
-
-	char_frequency_in_lines = str_lines.count(most_frequent_char_in_str).to_f/str_lines.size.to_f
-	return (char_frequency_in_lines - char_frequecy_in_str).abs
-end
-
-
-def get_average_frequency(lines)
-	arr_char = lines.join("").split("").uniq
-	arr_frequency = arr_char.map {|char| get_frequency_in_text(lines, char)}
-	return (arr_frequency.sum/arr_frequency.size).round(3)
-end
-
-
 def get_square_deviation(lines, str)
-	most_frequent_char, char_frequecy_in_str = get_most_frequent_character_in_string(str)
-	return Math.sqrt((char_frequecy_in_str - get_average_frequency(lines)).abs)
+	most_frequent_char, char_frequecy_in_str = get_most_frequent_character_in_string str
+	return Math.sqrt((char_frequecy_in_str - get_frequency_in_text(lines, most_frequent_char)).abs)
 end
 
 
