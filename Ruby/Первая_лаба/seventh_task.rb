@@ -37,16 +37,12 @@ def get_max_simple_div(number)
 			current_max_div = div
 		end
 	end
-	current_max_div
+	print "\nМакс. простой дел. числа: ", current_max_div
 end
 
 
 def get_mult_digit_not_divisible_five(number)
-	mult = 1
-	number.to_s.split('').each do |el| 
-		mult *= el.to_i if el.to_i % 5 != 0
-	end
-	mult
+	print "\nПроизведение цифр, не дел. на 5: ", number.digits.inject(1) { |mult, el| el % 5 != 0 ? mult *= el : mult }
 end
 
 
@@ -76,7 +72,7 @@ end
 
 
 def get_nod_by_task(number)
-	get_nod(get_max_simple_odd_div(number), get_mult_digit_number(number))
+	print "\nНОД: ", get_nod(get_max_simple_odd_div(number), get_mult_digit_number(number))
 end
 
 
