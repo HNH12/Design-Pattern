@@ -1,30 +1,26 @@
-def sum_digits(string_number)
-	sum = 0
-	string_number.split('').each{|el| sum += el.to_i}
-	sum
+def get_max_digit(number)
+	number.digits.max
 end
 
 
-def max_digit_number(string_number)
-	string_number.split('').max
+def get_min_digit(number)
+	number.digits.min
 end
 
 
-def min_digit_number(string_number)
-	string_number.split('').min
+def get_sum_digits(number)
+	number.digits.reduce(:+)
 end
 
 
-def mult_digit_number(string_number)
-	mult = 1
-	string_number.split('').each{|el| mult *= el.to_i}
-	mult
+def get_mult_digits(number)
+	number.digits.inject(:*)
 end
 
 
-number = ARGV[0]
+number = ARGV[0].to_i
 
-puts sum_digits(number)
-puts max_digit_number(number)
-puts min_digit_number(number)
-puts mult_digit_number(number)
+print "\nСумма цифр: ", get_sum_digits(number), "\n"
+print "\nПроизведение цифр: ", get_mult_digits(number), "\n"
+print "\nМинимальная цифра: ", get_min_digit(number), "\n"
+print "\nМаксимальная цифра: ", get_max_digit(number), "\n"
