@@ -1,10 +1,3 @@
-arr_char = "asd ds da AZ da sd фыв фыв фа".split('')
+arr_str = gets.chomp.split(' ').select{|el| el.to_f == el.to_i}.map{|el| el.to_i}
 
-print (arr_char.select do |symb| 
-		((symb.downcase >= 'a') && (symb.downcase <= 'z'))
-	end).uniq
-
-
-str = "asd ds da AZ da sd фыв фыв фа"
-puts
-print str.scan(/[A-z]/).uniq
+print arr_str.min
