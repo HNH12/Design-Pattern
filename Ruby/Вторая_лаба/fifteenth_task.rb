@@ -9,11 +9,6 @@ def read_file(path)
 end
 
 
-def get_frequency_character_in_string(str, char)
-	return str.count(char).to_f/str.size.to_f
-end
-
-
 def get_most_frequent_character_in_string(str)
 	arr = str.split('')
 	most_frequent_char = arr.max { |a| arr.count(a).to_f/arr.size.to_f }
