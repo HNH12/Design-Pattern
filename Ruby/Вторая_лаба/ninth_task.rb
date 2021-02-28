@@ -1,3 +1,7 @@
-str = gets.chomp.split(' ')
+arr = ['синий', 'белый', 'красный']
 
-puts str.inject(0) { |sum, el| el.size.even? ? sum += 1 : sum }
+z =  arr.sort do |a,b|
+	 a.length > b.length ? 1 : a > b ? 1 : -1
+end
+
+print z
