@@ -33,7 +33,7 @@ class Employee
 		@birthday = birthday
 		@phone_number = get_rus_number phone_number
 		@address = address
-		@email = email
+		@email = get_email_downcase email
 		@passport = passport
 		@specialty = specialty
 		@work_experience = work_experience
@@ -84,6 +84,8 @@ class Employee
 	def previous_salary=(x)
 		@work_experience != 0 ? @previous_salary = x : puts("Запись отклонена")
 	end
+
+	private :is_rus_number?, :get_rus_number, :is_email?, :get_email_downcase
 end
 
 
