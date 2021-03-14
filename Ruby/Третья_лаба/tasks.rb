@@ -1,9 +1,9 @@
 class Employee
-	attr_accessor :birthday, :address, :passport_series, :passport_number, :specialty, :work_experience
+	attr_accessor :address, :passport_series, :passport_number, :specialty, :work_experience
 
 
 	def is_rus_number?(new_number)
-		(new_number =~ /\+7-[0-9]{3}-[0-9]{7}|8[0-9]{10}|\+7-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}/) != nil ? true : false
+		(new_number =~ /\+7-[0-9]{3}-[0-9]{7}|8[0-9]{10}|\+7-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}/) == 0 ? true : false
 	end	
 
 	def get_rus_number(new_number)
@@ -15,7 +15,7 @@ class Employee
 	end
 
 	def is_email?(new_email)
-		(new_email =~ /[A-z]{3,}\w*@(gmail|mail|edu)(.com|.ru|.kubsu.ru)/) != nil ? true : false
+		(new_email =~ /[A-z]{3,}\w*@(gmail|mail|edu)(.com|.ru|.kubsu.ru)/) == 0 ? true : false
 	end
 
 	def get_email_downcase(new_email)
@@ -43,12 +43,32 @@ class Employee
 		end
 	end
 
+	def is_birthday?(new_birthday)
+		(new_birthday =~ /([1-9]|0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.]\d{2,4}/) == 0 ? true : false
+	end
+
+	def form_date(date_str)
+		date = date_str.gsub(/(\d+).(\d+).(\d+)/, '\3 \2 \1').split(' ')
+		year = date[0]
+		month = date[1]
+		day = date[2]
+		Time.new(year, month, day).strftime("%d.%m.%Y")
+	end
+
+	def get_birthday(new_birthday)
+		begin
+			is_birthday?(new_birthday) ? form_date(new_birthday) : raise
+		rescue
+			puts "Неверный тип аргумента"
+		end
+	end
+
 	def initialize(name, birthday, phone_number, address, 
 				  email, passport, specialty, work_experience, 
 				  previous_work = nil, previous_post = nil, previous_salary = nil)
 
 		@name = get_name name
-		@birthday = birthday
+		@birthday = get_birthday birthday
 		@phone_number = get_rus_number phone_number
 		@address = address
 		@email = get_email_downcase email
@@ -87,6 +107,14 @@ class Employee
 		@name = get_name new_name
 	end
 
+	def birthday
+		@birthday
+	end
+
+	def birthday=(new_birthday)
+		@birthday = get_birthday new_birthday
+	end
+
 	def previous_work
 		@previous_work ? @previous_work : "Поле не указано"
 	end
@@ -111,14 +139,15 @@ class Employee
 		@work_experience != 0 ? @previous_salary = x : puts("Запись отклонена")
 	end
 
-	private :is_rus_number?, :get_rus_number, :is_email?, :get_email_downcase, :is_name?, :get_name
+	private :is_rus_number?, :get_rus_number, :is_email?, :get_email_downcase, :is_name?, :get_name, :is_birthday?, :get_birthday,
+			:form_date
 end
 
 
 first_emp = Employee.new("    Толстиков    Илья Вадимович   ", "22.12.1999", "89183616209", "Odesskay 44", "Henuhi86@gmail.com", 
 	"0555 239999", "Programmer", 3, "Gazzprom", "Web", 54000)
-second_emp = Employee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "22.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
+second_emp = Employee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
 	"0555 239999", "Programmer", 0)
 
-
-puts second_emp.name
+puts first_emp.birthday
+puts second_emp.birthday
