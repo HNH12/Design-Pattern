@@ -1,5 +1,5 @@
 class Employee
-	attr_accessor :address, :passport_series, :passport_number, :specialty, :work_experience
+	attr_accessor :address, :specialty, :work_experience
 
 
 	def is_rus_number?(new_number)
@@ -63,6 +63,18 @@ class Employee
 		end
 	end
 
+	def is_passport?(new_passport)
+		(new_passport =~ /(\d{10}|(\d{4}\s\d{6}))/) == 0 ? true : false
+	end
+
+	def get_passport(new_passport)
+		begin
+			is_passport?(new_passport) ? new_passport.gsub(/(\d{4})(\d{6})/, '\1 \2') : raise
+		rescue
+			puts "Неверный тип аргумента"
+		end
+	end
+
 	def initialize(name, birthday, phone_number, address, 
 				  email, passport, specialty, work_experience, 
 				  previous_work = nil, previous_post = nil, previous_salary = nil)
@@ -72,7 +84,7 @@ class Employee
 		@phone_number = get_rus_number phone_number
 		@address = address
 		@email = get_email_downcase email
-		@passport = passport
+		@passport = get_passport passport
 		@specialty = specialty
 		@work_experience = work_experience
 
@@ -115,6 +127,14 @@ class Employee
 		@birthday = get_birthday new_birthday
 	end
 
+	def passport
+		@passport
+	end
+
+	def passport=(new_passport)
+		@passport = new_passport
+	end
+
 	def previous_work
 		@previous_work ? @previous_work : "Поле не указано"
 	end
@@ -140,14 +160,17 @@ class Employee
 	end
 
 	private :is_rus_number?, :get_rus_number, :is_email?, :get_email_downcase, :is_name?, :get_name, :is_birthday?, :get_birthday,
-			:form_date
+			:form_date, :is_passport?, :get_passport
 end
 
 
 first_emp = Employee.new("    Толстиков    Илья Вадимович   ", "22.12.1999", "89183616209", "Odesskay 44", "Henuhi86@gmail.com", 
-	"0555 239999", "Programmer", 3, "Gazzprom", "Web", 54000)
+	"0555239999", "Programmer", 3, "Gazzprom", "Web", 54000)
 second_emp = Employee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
 	"0555 239999", "Programmer", 0)
 
+
 puts first_emp.birthday
 puts second_emp.birthday
+
+puts first_emp.passport
