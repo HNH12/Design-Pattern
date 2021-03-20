@@ -1,3 +1,13 @@
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
+end
+
+
 class Employee
 	attr_accessor :address, :specialty, :work_experience
 
@@ -15,7 +25,7 @@ class Employee
 	def self.get_rus_number(new_number)
 		begin
 			is_rus_number?(new_number) ? form_rus_number(new_number): raise(TypeError)
-		rescue => error			
+		rescue => error
 			puts error.message
 		end
 	end
@@ -92,12 +102,12 @@ class Employee
 		self.email = email
 		self.passport = passport
 		self.specialty = specialty
-		self.work_experience = work_experience
+		self.work_experience = work_experience.to_f
 
 		if self.work_experience != 0
 			self.previous_work = previous_work
 			self.previous_post = previous_post
-			self.previous_salary = previous_salary
+			self.previous_salary = previous_salary.to_f
 		end
 	end
 
@@ -162,7 +172,7 @@ class Employee
 	end
 
 	def previous_salary=(x)
-		@work_experience != 0 ? @previous_salary = x : puts("Запись отклонена")
+		@work_experience != 0 ? @previous_salary = x.to_f : puts("Запись отклонена")
 	end
 
 	def get_full_info
@@ -202,64 +212,87 @@ class TestEmployee < Employee
 		end
 	end
 
-	def self.check_name(name)
+	def self.is_name?(name)
 		is_name? name
 	end
 
-	def self.check_passport(passport)
+	def self.is_passport?(passport)
 		is_passport? passport
 	end
 
-	def self.check_phone(phone)
+	def self.is_rus_number?(phone)
 		is_rus_number? phone
 	end
 
-	def self.check_date(date)
+	def self.is_birthday?(date)
 		is_birthday? date
 	end
 
-	def self.check_email(email)
+	def self.is_email?(email)
 		is_email? email
 	end
 end
 
 
-first_emp = Employee.new("    Толстиков    Илья Вадимович   ", "22.12.1999", "89183616209", "Odesskay 44", "Henuhi86@gmail.com", 
-	"0555239999", "Programmer", 3, "Gazzprom", "Web", 54000)
-second_emp = Employee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
-	"0555 239999", "Programmer", 0)
+class TerminalViewListEmployee
+	@@listEmployee = []
 
+	def self.append
+		is_not_appended = true
+		while(is_not_appended)
+			begin 
+				print "\nВведите ФИО: "
+				name = gets.chomp
+				print "\nВведите дату: "
+				date = gets.chomp
+				print "\nВведите телефон: "
+				phone = gets.chomp()
+				print "\nВведите адрес: "
+				address = gets.chomp()
+				print "\nВведите email: "
+				email = gets.chomp()
+				print "\nВведите паспортные данные: "
+				passport = gets.chomp()
+				print "\nВведите специальность: "
+				specialty = gets.chomp()
+				print "\nВведите опыт работы: "
+				work_experience = gets.chomp().to_f
 
-third_emp = TestEmployee.new("    Толстиков    Илья Вадимович   ", "22.12.1999", "89183616209", "Odesskay 44", "Henuhi86@gmail.com", 
-	"0555239999", "Programmer", 3, "Gazzprom", "Web", 54000)
+				previous_work = nil
+				previous_post = nil
+				previous_salary = nil
 
-fourth_emp = TestEmployee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
-	"0555 239999", "Programmer", 0)
+				if work_experience != 0
+					print "\nВведите предыдущее место работы: "
+					previous_work = gets.chomp()
+					print "\nВведите предыдущую специальность: "
+					previous_post = gets.chomp()
+					print "\nВведите предыдущую зарплату: "
+					previous_salary = gets.chomp().to_f
+				end
 
+				if [Employee.get_name(name), Employee.get_birthday(date), Employee.get_rus_number(phone), address,
+				 	Employee.get_email_downcase(email), Employee.get_passport(passport)].include? nil 
+					raise TypeError
+				else
+					@@listEmployee.push(Employee.new(name, date, phone, address, email, passport, specialty, work_experience, 
+						previous_work, previous_post, previous_salary))
+					is_not_appended = false
+				end
 
-puts "Укажите, что необходимо проверить:"
-puts "1. ФИО"
-puts "2. Телефон"
-puts "3. Дата"
-puts "4. Email"
-puts "5. Паспорт"
+			rescue
+				puts "Некорректные данные. Введите данные ещё раз"
+			end
+		end
+	end
 
-puts
-puts "Ваш выбор:"
-choice = gets.chomp().to_i
-puts "Введите данные: "
-data = gets.chomp().force_encoding("Windows-1251")
-puts data
-
-case choice
-when 1
-	puts TestEmployee.check_name(data)
-when 2
-	puts TestEmployee.check_phone(data)
-when 3
-	puts TestEmployee.check_date(data)
-when 4
-	puts TestEmployee.check_email(data)
-when 5
-	puts TestEmployee.check_passport(data)
+	def self.get_list
+		puts
+		puts @@listEmployee
+	end
 end
+
+
+
+TerminalViewListEmployee.append
+TerminalViewListEmployee.get_list
