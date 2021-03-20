@@ -154,7 +154,7 @@ class Employee
 	end
 
 	def previous_work=(x)
-		@work_experience != 0 ? @previous_post = x : puts("Запись отклонена")
+		@work_experience != 0 ? @previous_work = x : puts("Запись отклонена")
 	end
 
 	def previous_post=(x)
@@ -166,13 +166,41 @@ class Employee
 	end
 
 	def get_full_info
+		puts self.name
+		puts self.birthday
+		puts self.phone_number
+		puts self.address
+		puts self.email
+		puts self.passport
+		puts self.specialty
+		puts self.work_experience
 
+		if self.work_experience != 0
+			puts self.previous_work = previous_work
+			puts self.previous_post = previous_post
+			puts self.previous_salary = previous_salary
+		end
 	end
 end
 
 
 class TestEmployee < Employee
-	 	
+	def get_full_info
+		puts "Имя: ", self.name
+		puts "Дата рождения: ", self.birthday
+		puts "Номер телефона:", self.phone_number
+		puts "Адрес: ", self.address
+		puts "Email: ", self.email
+		puts "Паспорт: ", self.passport
+		puts "Профессия: ", self.specialty
+		puts "Опыт работы: ", self.work_experience
+
+		if self.work_experience != 0
+			puts "Предыдущее место работы: ", self.previous_work = previous_work
+			puts "Предыдущее работа: ", self.previous_post = previous_post
+			puts "Предыдущая зарплаты: ", self.previous_salary = previous_salary
+		end
+	end
 end
 
 
@@ -180,3 +208,14 @@ first_emp = Employee.new("    Толстиков    Илья Вадимович 
 	"0555239999", "Programmer", 3, "Gazzprom", "Web", 54000)
 second_emp = Employee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
 	"0555 239999", "Programmer", 0)
+
+
+third_emp = TestEmployee.new("    Толстиков    Илья Вадимович   ", "22.12.1999", "89183616209", "Odesskay 44", "Henuhi86@gmail.com", 
+	"0555239999", "Programmer", 3, "Gazzprom", "Web", 54000)
+
+fourth_emp = TestEmployee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
+	"0555 239999", "Programmer", 0)
+
+
+puts "Новый запуск:\n\n"
+ObjectSpace.each_object(Employee) { |o| puts o.get_full_info }
