@@ -2,31 +2,37 @@ class Employee
 	attr_accessor :address, :specialty, :work_experience
 
 
-	def is_rus_number?(new_number)
-		(new_number =~ /\+7-[0-9]{3}-[0-9]{7}|8[0-9]{10}|\+7-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}/) == 0 ? true : false
+	def self.is_rus_number?(new_number)
+		new_number.scan(/\d/).size == 11 ? true : false
 	end	
 
-	def get_rus_number(new_number)
+	def self.form_rus_number(new_number)
+		number = new_number.scan(/\d/)
+
+		"7-" + number[1,3].join('')+"-"+number[4..].join('')
+	end
+
+	def self.get_rus_number(new_number)
 		begin
-			is_rus_number?(new_number) ? new_number.gsub(/(^8)(\d{3})(\d{7})/, '+7-\2-\3'): raise
-		rescue
-			puts "Неверный тип аргумента"
+			is_rus_number?(new_number) ? form_rus_number(new_number): raise(TypeError)
+		rescue => error			
+			puts error.message
 		end
 	end
 
-	def is_email?(new_email)
-		(new_email =~ /[A-z]{3,}\w*@(gmail|mail|edu)(.com|.ru|.kubsu.ru)/) == 0 ? true : false
+	def self.is_email?(new_email)
+		(new_email =~ /^((([0-9A-Za-z]{1}[-0-9A-z\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$/) == 0 ? true : false
 	end
 
-	def get_email_downcase(new_email)
+	def self.get_email_downcase(new_email)
 		begin
-			is_email?(new_email) ? new_email.downcase : raise
-		rescue
-			puts "Неверный тип аргумента"
+			is_email?(new_email) ? new_email.downcase : raise(TypeError)
+		rescue => error
+			puts error.message
 		end
 	end
 
-	def is_name?(new_name)
+	def self.is_name?(new_name)
 		regx = /(([А-яё]+\s*-\s*[А-яё]+\s+)|([А-яё]+\s+))(([А-яё]+\s*-\s*[А-яё]+\s+)|([А-яё]+\s+))(([А-яё]+\s+[А-яё]+\s*$)|([А-яё]+\s*$))/
 		if (new_name =~ regx) != nil
 			true
@@ -35,19 +41,19 @@ class Employee
 		end
 	end
 
-	def get_name(new_name)
+	def self.get_name(new_name)
 		begin
-			is_name?(new_name) ? new_name.strip().gsub(/(\s{2,})/, ' ').gsub(/\s*-\s*/, '-').gsub(/[А-яё]+/) {|word| word.capitalize} : raise
-		rescue
-			puts "Неверный тип аргумента"
+			is_name?(new_name) ? new_name.strip().gsub(/(\s{2,})/, ' ').gsub(/\s*-\s*/, '-').gsub(/[А-яё]+/) {|word| word.capitalize} : raise(TypeError)
+		rescue => error
+			puts error.message
 		end
 	end
 
-	def is_birthday?(new_birthday)
+	def self.is_birthday?(new_birthday)
 		(new_birthday =~ /([1-9]|0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.]\d{2,4}/) == 0 ? true : false
 	end
 
-	def form_date(date_str)
+	def self.form_date(date_str)
 		date = date_str.gsub(/(\d+).(\d+).(\d+)/, '\3 \2 \1').split(' ')
 		year = date[0]
 		month = date[1]
@@ -55,23 +61,23 @@ class Employee
 		Time.new(year, month, day).strftime("%d.%m.%Y")
 	end
 
-	def get_birthday(new_birthday)
+	def self.get_birthday(new_birthday)
 		begin
-			is_birthday?(new_birthday) ? form_date(new_birthday) : raise
-		rescue
-			puts "Неверный тип аргумента"
+			is_birthday?(new_birthday) ? form_date(new_birthday) : raise(TypeError)
+		rescue => error
+			puts error.message
 		end
 	end
 
-	def is_passport?(new_passport)
+	def self.is_passport?(new_passport)
 		(new_passport =~ /(\d{10}|(\d{4}\s\d{6}))/) == 0 ? true : false
 	end
 
-	def get_passport(new_passport)
+	def self.get_passport(new_passport)
 		begin
-			is_passport?(new_passport) ? new_passport.gsub(/(\d{4})(\d{6})/, '\1 \2') : raise
-		rescue
-			puts "Неверный тип аргумента"
+			is_passport?(new_passport) ? new_passport.gsub(/(\d{4})(\d{6})/, '\1 \2') : raise(TypeError)
+		rescue => error
+			puts error.message
 		end
 	end
 
@@ -79,19 +85,19 @@ class Employee
 				  email, passport, specialty, work_experience, 
 				  previous_work = nil, previous_post = nil, previous_salary = nil)
 
-		@name = get_name name
-		@birthday = get_birthday birthday
-		@phone_number = get_rus_number phone_number
-		@address = address
-		@email = get_email_downcase email
-		@passport = get_passport passport
-		@specialty = specialty
-		@work_experience = work_experience
+		self.name = name
+		self.birthday = birthday
+		self.phone_number = phone_number
+		self.address = address
+		self.email = email
+		self.passport = passport
+		self.specialty = specialty
+		self.work_experience = work_experience
 
-		if @work_experience == 0
-			@previous_work = previous_work
-			@previous_post = previous_post
-			@previous_salary = previous_salary
+		if self.work_experience != 0
+			self.previous_work = previous_work
+			self.previous_post = previous_post
+			self.previous_salary = previous_salary
 		end
 	end
 
@@ -100,7 +106,7 @@ class Employee
 	end
 
 	def phone_number=(new_phone_number)
-		@phone_number = get_rus_number new_phone_number
+		@phone_number = Employee.get_rus_number new_phone_number
 	end
 
 	def email
@@ -108,7 +114,7 @@ class Employee
 	end
 
 	def email=(new_email)
-		@email = get_email_downcase new_email
+		@email = Employee.get_email_downcase new_email
 	end
 
 	def name
@@ -116,7 +122,7 @@ class Employee
 	end
 
 	def name=(new_name)
-		@name = get_name new_name
+		@name = Employee.get_name new_name
 	end
 
 	def birthday
@@ -124,7 +130,7 @@ class Employee
 	end
 
 	def birthday=(new_birthday)
-		@birthday = get_birthday new_birthday
+		@birthday = Employee.get_birthday new_birthday
 	end
 
 	def passport
@@ -132,7 +138,7 @@ class Employee
 	end
 
 	def passport=(new_passport)
-		@passport = new_passport
+		@passport = Employee.get_passport new_passport
 	end
 
 	def previous_work
@@ -159,8 +165,14 @@ class Employee
 		@work_experience != 0 ? @previous_salary = x : puts("Запись отклонена")
 	end
 
-	private :is_rus_number?, :get_rus_number, :is_email?, :get_email_downcase, :is_name?, :get_name, :is_birthday?, :get_birthday,
-			:form_date, :is_passport?, :get_passport
+	def get_full_info
+
+	end
+end
+
+
+class TestEmployee < Employee
+	 	
 end
 
 
@@ -168,9 +180,3 @@ first_emp = Employee.new("    Толстиков    Илья Вадимович 
 	"0555239999", "Programmer", 3, "Gazzprom", "Web", 54000)
 second_emp = Employee.new("Салтыков   -   Щедрин Иван-    Руслан    Ахмед    оглы", "1.12.1999", "89183616209", "Oddesskay 44", "Henuhi86@gmail.com", 
 	"0555 239999", "Programmer", 0)
-
-
-puts first_emp.birthday
-puts second_emp.birthday
-
-puts first_emp.passport
