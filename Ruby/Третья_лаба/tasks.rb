@@ -190,6 +190,7 @@ class Employee
 			puts self.previous_post = previous_post
 			puts self.previous_salary = previous_salary
 		end
+		puts
 	end
 end
 
@@ -286,13 +287,32 @@ class TerminalViewListEmployee
 		end
 	end
 
-	def self.get_list
-		puts
-		puts @@listEmployee
+	def self.show_list
+		@@listEmployee.each { |obj| obj.get_full_info }
 	end
 end
 
 
-
 TerminalViewListEmployee.append
-TerminalViewListEmployee.get_list
+TerminalViewListEmployee.append
+TerminalViewListEmployee.show_list
+
+
+# Толстиков Илья Вадимович
+# 22.12.1999
+# 89183616209
+# Одесская 44
+# henuhi86@gmail.com
+# 3333444455
+# Программист
+# 0
+
+
+# Толстиков Иль Вадимович
+# 22.02.1999
+# 89183616219
+# Одесская 4
+# henuhi8@gsmail.com
+# 3333444456
+# Почти программист
+# 0
