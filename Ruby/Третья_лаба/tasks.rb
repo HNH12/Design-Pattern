@@ -1,3 +1,6 @@
+require 'openssl'
+
+
 if (Gem.win_platform?)
   Encoding.default_external = Encoding.find(Encoding.locale_charmap)
   Encoding.default_internal = __ENCODING__
@@ -181,7 +184,11 @@ class Employee
 		puts self.phone_number
 		puts self.address
 		puts self.email
-		puts self.passport
+
+		keys = OpenSSL::PKey::RSA.new File.open("certificate.pem")
+		res = keys.public_encrypt(self.passport)
+		puts res
+
 		puts self.specialty
 		puts self.work_experience
 
@@ -287,6 +294,16 @@ class TerminalViewListEmployee
 		end
 	end
 
+	def self.write_to_file(file)
+		old_stdout = $stdout
+		File.open(file, 'w:ASCII-8BIT') do |file| 
+			$stdout = file
+			@@listEmployee.each { |obj| file.write obj.get_full_info }
+		end
+		$stdout = old_stdout
+
+	end
+
 	def self.show_list
 		@@listEmployee.each { |obj| obj.get_full_info }
 	end
@@ -295,7 +312,7 @@ end
 
 TerminalViewListEmployee.append
 TerminalViewListEmployee.append
-TerminalViewListEmployee.show_list
+TerminalViewListEmployee.write_to_file("write_file.txt")
 
 
 # Толстиков Илья Вадимович
