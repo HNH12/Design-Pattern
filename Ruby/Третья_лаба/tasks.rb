@@ -201,6 +201,26 @@ class TestEmployee < Employee
 			puts "Предыдущая зарплаты: ", self.previous_salary = previous_salary
 		end
 	end
+
+	def self.check_name(name)
+		is_name? name
+	end
+
+	def self.check_passport(passport)
+		is_passport? passport
+	end
+
+	def self.check_phone(phone)
+		is_rus_number? phone
+	end
+
+	def self.check_date(date)
+		is_birthday? date
+	end
+
+	def self.check_email(email)
+		is_email? email
+	end
 end
 
 
@@ -217,5 +237,29 @@ fourth_emp = TestEmployee.new("Салтыков   -   Щедрин Иван-    
 	"0555 239999", "Programmer", 0)
 
 
-puts "Новый запуск:\n\n"
-ObjectSpace.each_object(Employee) { |o| puts o.get_full_info }
+puts "Укажите, что необходимо проверить:"
+puts "1. ФИО"
+puts "2. Телефон"
+puts "3. Дата"
+puts "4. Email"
+puts "5. Паспорт"
+
+puts
+puts "Ваш выбор:"
+choice = gets.chomp().to_i
+puts "Введите данные: "
+data = gets.chomp().force_encoding("Windows-1251")
+puts data
+
+case choice
+when 1
+	puts TestEmployee.check_name(data)
+when 2
+	puts TestEmployee.check_phone(data)
+when 3
+	puts TestEmployee.check_date(data)
+when 4
+	puts TestEmployee.check_email(data)
+when 5
+	puts TestEmployee.check_passport(data)
+end
