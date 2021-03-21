@@ -14,6 +14,49 @@ end
 class Employee
 	attr_accessor :address, :specialty, :work_experience
 
+	def self.return_employee_by_name(needed_name)
+		needed_name = get_name needed_name
+		list_employee = []
+		ObjectSpace.each_object(Employee) do |obj| 
+			if obj.name == needed_name 
+				list_employee.push(obj) 
+			end
+		end
+		list_employee.length == 0 ? "Не найдено" : list_employee
+	end
+
+	def self.return_employee_by_email(needed_email)
+		needed_email = get_email_downcase needed_email
+		list_employee = []
+		ObjectSpace.each_object(Employee) do |obj| 
+			if obj.email == needed_email 
+				list_employee.push(obj) 
+			end
+		end
+		list_employee.length == 0 ? "Не найдено" : list_employee
+	end
+
+	def self.return_employee_by_phone_number(needed_number)
+		needed_number = get_rus_number needed_number
+		list_employee = []
+		ObjectSpace.each_object(Employee) do |obj| 
+			if obj.phone_number == needed_number 
+				list_employee.push(obj) 
+			end
+		end
+		list_employee.length == 0 ? "Не найдено" : list_employee
+	end
+
+	def self.return_employee_by_name(needed_passport)
+		needed_passport = get_passport needed_passport
+		list_employee = []
+		ObjectSpace.each_object(Employee) do |obj| 
+			if obj.passport == needed_passport 
+				list_employee.push(obj) 
+			end
+		end
+		list_employee.length == 0 ? "Не найдено" : list_employee
+	end
 
 	def self.is_rus_number?(new_number)
 		new_number.scan(/\d/).size == 11 ? true : false
@@ -179,23 +222,23 @@ class Employee
 	end
 
 	def get_full_info
-		puts self.name
-		puts self.birthday
-		puts self.phone_number
-		puts self.address
-		puts self.email
+		puts self.name + ";"
+		puts self.birthday + ";"
+		puts self.phone_number.to_s + ";"
+		puts self.address + ";"
+		puts self.email + ";"
 
 		keys = OpenSSL::PKey::RSA.new File.open("certificate.pem")
 		res = keys.public_encrypt(self.passport)
-		puts res
+		puts res.to_s + ";"
 
-		puts self.specialty
-		puts self.work_experience
+		puts self.specialty + ";"
+		puts self.work_experience.to_s + ";"
 
 		if self.work_experience != 0
-			puts self.previous_work = previous_work
-			puts self.previous_post = previous_post
-			puts self.previous_salary = previous_salary
+			puts self.previous_work + ";"
+			puts self.previous_post + ";"
+			puts self.previous_salary.to_s + ";"
 		end
 		puts
 	end
@@ -243,7 +286,7 @@ end
 
 
 class TerminalViewListEmployee
-	@@listEmployee = []
+	@@list_employee = []
 
 	def self.append
 		is_not_appended = true
@@ -283,29 +326,34 @@ class TerminalViewListEmployee
 				 	Employee.get_email_downcase(email), Employee.get_passport(passport)].include? nil 
 					raise TypeError
 				else
-					@@listEmployee.push(Employee.new(name, date, phone, address, email, passport, specialty, work_experience, 
+					@@list_employee.push(Employee.new(name, date, phone, address, email, passport, specialty, work_experience, 
 						previous_work, previous_post, previous_salary))
 					is_not_appended = false
 				end
 
 			rescue
 				puts "Некорректные данные. Введите данные ещё раз"
+				print [Employee.get_name(name), Employee.get_birthday(date), Employee.get_rus_number(phone), address,
+				 	Employee.get_email_downcase(email), Employee.get_passport(passport)]
 			end
 		end
 	end
 
-	def self.write_to_file(file)
+	def self.write_to_file(file_path)
 		old_stdout = $stdout
-		File.open(file, 'w:ASCII-8BIT') do |file| 
+		File.open(file_path, 'w:ASCII-8BIT') do |file| 
 			$stdout = file
-			@@listEmployee.each { |obj| file.write obj.get_full_info }
+			@@list_employee.each { |obj| file.write obj.get_full_info }
 		end
 		$stdout = old_stdout
+	end
 
+	def self.read_from_file(file_path)
+		employees = File.open(file_path , 'r') { |file| file.read}
 	end
 
 	def self.show_list
-		@@listEmployee.each { |obj| obj.get_full_info }
+		@@list_employee.each { |obj| obj.get_full_info }
 	end
 end
 
@@ -313,7 +361,9 @@ end
 TerminalViewListEmployee.append
 TerminalViewListEmployee.append
 TerminalViewListEmployee.write_to_file("write_file.txt")
+TerminalViewListEmployee.read_from_file("write_file.txt")
 
+puts Employee.return_employee_by_name("Толстиков Илья Вадимович")
 
 # Толстиков Илья Вадимович
 # 22.12.1999
