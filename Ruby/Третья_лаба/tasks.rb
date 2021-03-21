@@ -17,6 +17,7 @@ class Employee
 	def self.return_employee_by_name(needed_name)
 		needed_name = get_name needed_name
 		list_employee = []
+		
 		ObjectSpace.each_object(Employee) do |obj| 
 			if obj.name == needed_name 
 				list_employee.push(obj) 
@@ -28,6 +29,7 @@ class Employee
 	def self.return_employee_by_email(needed_email)
 		needed_email = get_email_downcase needed_email
 		list_employee = []
+
 		ObjectSpace.each_object(Employee) do |obj| 
 			if obj.email == needed_email 
 				list_employee.push(obj) 
@@ -39,6 +41,7 @@ class Employee
 	def self.return_employee_by_phone_number(needed_number)
 		needed_number = get_rus_number needed_number
 		list_employee = []
+
 		ObjectSpace.each_object(Employee) do |obj| 
 			if obj.phone_number == needed_number 
 				list_employee.push(obj) 
@@ -50,6 +53,7 @@ class Employee
 	def self.return_employee_by_name(needed_passport)
 		needed_passport = get_passport needed_passport
 		list_employee = []
+
 		ObjectSpace.each_object(Employee) do |obj| 
 			if obj.passport == needed_passport 
 				list_employee.push(obj) 
