@@ -72,15 +72,29 @@ end
 
 
 def get_nod_by_task(number)
-	print "\nНОД: ", get_nod(get_max_simple_odd_div(number), get_mult_digit_number(number))
+	print "\nНОД: ", get_nod(get_max_simple_odd_div(number), get_mult_digits(number))
 end
 
 
 begin
-	param = ARGV[0] + ' ' + ARGV[1]
-   	puts eval param
+	raise if ARGV.length < 2
+	for i in 0..ARGV.length - 2
+		param = ARGV[i] + ' ' + ARGV[ARGV.length-1]
+	   	eval param
+	   	puts
+   	end
 rescue SyntaxError
-	puts 'Hello World'
+	puts
+	puts "Hello World"
+	puts "Подсказка:"
+	puts "get_max_simple_div(number)"
+	puts "get_mult_digit_not_divisible_five(number)"
+	puts "get_nod_by_task(number)\n"
 rescue
+	puts
    	puts 'Hello World'
+   	puts "Подсказка:"
+   	puts "get_max_simple_div(number)"
+	puts "get_mult_digit_not_divisible_five(number)"
+	puts "get_nod_by_task(number)\n"
 end

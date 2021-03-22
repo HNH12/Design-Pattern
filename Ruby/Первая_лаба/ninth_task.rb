@@ -56,8 +56,12 @@ end
 
 
 begin
-	param = ARGV.join(' ')
-   	puts eval param
+	raise if ARGV.length < 2
+	for i in 0..ARGV.length - 2
+		param = ARGV[i] + ' ' + ARGV[ARGV.length-1]
+	   	puts eval param
+	   	puts
+   	end
 rescue SyntaxError
 	puts 'Hello World'
 rescue

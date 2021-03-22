@@ -107,11 +107,12 @@ end
 
 
 begin
-	param = ARGV.join(' ')
-	if is_number?(param)
-		raise NameError
-	end
-   	puts eval param
+	raise if ARGV.length < 2
+	for i in 0..ARGV.length - 2
+		param = ARGV[i] + ' ' + ARGV[ARGV.length-1]
+	   	puts eval param
+	   	puts
+   	end
 rescue SyntaxError
 	h()
 rescue NoMethodError
