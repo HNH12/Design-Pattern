@@ -17,7 +17,7 @@ class Employee
 	def self.return_employee_by_name(needed_name)
 		needed_name = get_name needed_name
 		list_employee = []
-		
+
 		ObjectSpace.each_object(Employee) do |obj| 
 			if obj.name == needed_name 
 				list_employee.push(obj) 
@@ -50,7 +50,7 @@ class Employee
 		list_employee.length == 0 ? "Не найдено" : list_employee
 	end
 
-	def self.return_employee_by_name(needed_passport)
+	def self.return_employee_by_passport(needed_passport)
 		needed_passport = get_passport needed_passport
 		list_employee = []
 
@@ -358,6 +358,24 @@ class TerminalViewListEmployee
 
 	def self.show_list
 		@@list_employee.each { |obj| obj.get_full_info }
+	end
+
+	def self.find_employee(name, email=nil, phone=nil, passport=nil)
+		if passport
+			return(Employee.return_employee_by_name(name) & Employee.return_employee_by_passport(name) &
+				Employee.return_employee_by_phone_number(phone) & Employee.return_employee_by_email(email))
+		end
+
+		if phone
+			return(Employee.return_employee_by_name(name) & Employee.return_employee_by_phone_number(phone) & 
+				Employee.return_employee_by_email(email))
+		end
+
+		if email
+			return(Employee.return_employee_by_name(name) & Employee.return_employee_by_email(email))
+		end
+
+		Employee.return_employee_by_name name
 	end
 end
 
