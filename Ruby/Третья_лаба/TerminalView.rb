@@ -42,9 +42,6 @@ class TerminalViewListEmployee
 					previous_salary = gets.chomp().to_f
 				end
 
-				print [Employee.get_name(name), Employee.get_birthday(date), Employee.get_rus_number(phone), address,
-				 	Employee.get_email_downcase(email), Employee.get_passport(passport)]
-
 				if [Employee.get_name(name), Employee.get_birthday(date), Employee.get_rus_number(phone), address,
 				 	Employee.get_email_downcase(email), Employee.get_passport(passport)].include? nil 
 					raise TypeError
@@ -118,5 +115,28 @@ class TerminalViewListEmployee
 		end
 
 		Employee.return_employee_by_name name
+	end
+
+	def self.change_employee 
+		check = true
+		while check
+			puts 'Введите паспорт сотрудника'
+			begin
+				passport = Employee.get_passport gets.chomp
+				(Employee.return_employee_by_passport).each do 
+					puts 'Что вы хотите изменить у пользователя?'
+					puts '1) ФИО','2) Телефон', '3) Email', '4) Паспорт', '5) Специальность', '6) Опыт работы'
+					choose = gets.chomp
+					
+				end
+				check = false
+			rescue => e
+				e.message
+			end
+		end
+	end
+
+	def close_app
+		exit(0)
 	end
 end
