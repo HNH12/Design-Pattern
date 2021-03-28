@@ -121,4 +121,6 @@ rescue NameError
 	h()
 rescue ArgumentError
 	h()
+rescue 
+	h()
 end
