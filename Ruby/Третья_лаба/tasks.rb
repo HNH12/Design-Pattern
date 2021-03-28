@@ -18,7 +18,7 @@ end
 
 
 TerminalViewListEmployee.append
-# TerminalViewListEmployee.append
+TerminalViewListEmployee.append
 TerminalViewListEmployee.write_to_file("write_file.txt")
 TerminalViewListEmployee.read_from_file("write_file.txt")
 print TerminalViewListEmployee.show_list
@@ -27,14 +27,14 @@ print TerminalViewListEmployee.show_list
 # a = TestEmployee.new("Толстиков Илья Вадимович","22.12.1999","89183616209","Одесская 44","henuhi86@gmail.com","3333444455" , "Программист", 0)
 # puts a.get_full_info()
 
-Толстиков Иль Вадимович
-22.12.1999
-89183616209
-Одесская 44
-henuhi86@gmail.com
-3333444455
-Программист
-0
+# Толстиков Иль Вадимович
+# 22.12.1999
+# 89183616209
+# Одесская 44
+# henuhi86@gmail.com
+# 3333444455
+# Программист
+# 0
 
 
 # Толстиков Cь Вадимович

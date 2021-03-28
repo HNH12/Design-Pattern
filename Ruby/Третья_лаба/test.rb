@@ -2,12 +2,13 @@ require 'openssl'
 
 keypair = OpenSSL::PKey::RSA.new File.read('certificate.pem')
 
-# z = keypair.public_encrypt('7766559876')
-# File.write('input.txt', z)
+z = keypair.public_encrypt('афы 3333 445566')
+File.open('input.txt', 'w') do |file|
+	file.write z
+end
 
-file = File.read('input.txt')
+puts z
 
-r = keypair.private_decrypt(file)
-
-puts r
-
+File.open('input.txt', 'r') do |file|
+	print keypair.private_decrypt(file.read)
+end
