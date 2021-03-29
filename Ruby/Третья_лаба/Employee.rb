@@ -18,8 +18,8 @@ class Employee
 		list_employee = []
 
 		ObjectSpace.each_object(Employee) do |obj| 
-			if obj.email == needed_email 
-				list_employee.push(obj) 
+			if obj.email == needed_email  
+				list_employee.push(obj)
 			end
 		end
 		list_employee.length == 0 ? "Не найдено" : list_employee
@@ -189,27 +189,27 @@ class Employee
 	end
 
 	def previous_work
-		previous_work ? previous_work : "Поле не указано"
+		@previous_work ? @previous_work : "Поле не указано"
 	end
 
 	def previous_post
-		previous_post ? previous_post : "Поле не указано"
+		@previous_post ? @previous_post : "Поле не указано"
 	end
 
 	def previous_salary
-		previous_salary ? previous_salary : "Поле не указано"
+		@previous_salary ? @previous_salary : "Поле не указано"
 	end
 
 	def previous_work=(x)
-		work_experience != 0 ? previous_work = x : raise("Невозможно")
+		work_experience != 0 ? @previous_work = x : raise("Невозможно записать")
 	end
 
 	def previous_post=(x)
-		work_experience != 0 ? previous_post = x : raise("Невозможно")
+		work_experience != 0 ? @previous_post = x : raise("Невозможно записать")
 	end
 
 	def previous_salary=(x)
-		work_experience != 0 ? previous_salary = x.to_f : raise("Невозможно")
+		work_experience != 0 ? @previous_salary = x.to_f : raise("Невозможно записать")
 	end
 
 	def get_full_info
