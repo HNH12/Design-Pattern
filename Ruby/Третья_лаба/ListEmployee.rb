@@ -59,4 +59,8 @@ class ListEmployee
 	def sort field
 		eval "list_employee.sort! { |a, b| a.#{field} <=> b.#{field} }"
 	end
+
+	def find_emp(info)
+		return @new_list.select {|emp| [emp.name, emp.email, emp.phone_number, emp.passport].include? info}
+	end
 end

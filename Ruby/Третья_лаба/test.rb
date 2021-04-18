@@ -37,6 +37,8 @@ end
 first_obj = New_obj.new(5)
 second_obj = New_obj.new(5)
 
-a = nil
+a = [1,2,3]
 
-puts Validate.is_employee? 'sd'
+b = a.select {|el| el == 2}
+
+puts a, b

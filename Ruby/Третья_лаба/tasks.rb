@@ -16,12 +16,12 @@ if (Gem.win_platform?)
 end
 
 
-TerminalViewListEmployee.append
-TerminalViewListEmployee.append
-TerminalViewListEmployee.write_to_file("write_file.txt")
+# TerminalViewListEmployee.append
+# TerminalViewListEmployee.append
+# TerminalViewListEmployee.write_to_file("write_file.txt")
 TerminalViewListEmployee.read_from_file("write_file.txt")
 puts TerminalViewListEmployee.show_list
-TerminalViewListEmployee
+puts TerminalViewListEmployee.find('Толстиков Илья Вадимович')
 
 
 # a = TestEmployee.new("Толстиков Илья Вадимович","22.12.1999","89183616209","Одесская 44","henuhi86@gmail.com","3333444455" , "Программист", 0)

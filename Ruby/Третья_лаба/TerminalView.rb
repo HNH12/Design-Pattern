@@ -42,7 +42,7 @@ class TerminalViewListEmployee
 					print "\nВведите предыдущую зарплату: "
 					previous_salary = gets.chomp().to_f
 				end
-				
+
 				if !Validate.is_employee?(name, date, phone, address, email, passport, specialty, work_experience)
 					raise TypeError
 				else
@@ -69,25 +69,16 @@ class TerminalViewListEmployee
 		@@list_employee.to_s
 	end
 
-	def self.find_employee(name, email=nil, phone=nil, passport=nil)
-		if passport
-			return(Employee.return_employee_by_name(name) & Employee.return_employee_by_passport(name) &
-				Employee.return_employee_by_phone_number(phone) & Employee.return_employee_by_email(email))
+	def self.find(data)
+		emp = @@list_employee.find_emp(data)
+		if emp == []
+			puts 'Неверные данные'
+		else
+			emp
 		end
-
-		if phone
-			return(Employee.return_employee_by_name(name) & Employee.return_employee_by_phone_number(phone) & 
-				Employee.return_employee_by_email(email))
-		end
-
-		if email
-			return(Employee.return_employee_by_name(name) & Employee.return_employee_by_email(email))
-		end
-
-		Employee.return_employee_by_name name
 	end
 
-	def close_app
+	def self.close_app
 		exit(0)
 	end
 end
