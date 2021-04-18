@@ -1,14 +1,28 @@
-require 'openssl'
+class New_obj
+	def initialize(value)
+		self.value = value
+	end
 
-keypair = OpenSSL::PKey::RSA.new File.read('certificate.pem')
+	def to_s
+		return @value.to_s
+	end
 
-z = keypair.public_encrypt('афы 3333 445566')
-File.open('input.txt', 'w') do |file|
-	file.write z
+	def value=(user_value)
+		@value = user_value
+	end
+
+	def value
+		return @value
+	end
+
+	def ==(obj)
+		return @value == obj.value
+	end
 end
 
-puts z
 
-File.open('input.txt', 'r') do |file|
-	print keypair.private_decrypt(file.read)
-end
+first_obj = New_obj.new(5)
+second_obj = New_obj.new(5)
+
+
+puts first_obj == second_obj

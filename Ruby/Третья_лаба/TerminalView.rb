@@ -6,7 +6,7 @@ require_relative 'ListEmployee.rb'
 
 class TerminalViewListEmployee
 	@@list_employee = ListEmployee.new()
-	@@keypair = OpenSSL::PKey::RSA.new File.read('certificate.pem')
+	
 
 	def self.append
 		is_not_appended = true
@@ -57,43 +57,12 @@ class TerminalViewListEmployee
 		end
 	end
 
-	def self.write_to_file(file_path)
-		File.open(file_path, 'w:UTF-8') do |file| 
-			@@list_employee.each do |user| 
-				passport_cipher = @@keypair.public_encrypt(user.passport.to_s)
-				file.write(user.name.to_s + '|||' + user.birthday.to_s + '|||' + user.phone_number.to_s + '|||' +
-					+ user.address.to_s + '|||' + user.email.to_s + '|||' + passport_cipher.force_encoding('UTF-8') + 
-					+ '|||' + user.specialty.to_s + '|||' + user.work_experience.to_s)
-				if user.work_experience > 0 
-					file.write('|||' + user.previous_work + '|||' + user.previous_post + '|||' + user.previous_salary) 
-				end
-				file.write("\n\n")
-			end
-		end
-	end
-
 	def self.read_from_file(file_path)
-		File.open(file_path, 'r:UTF-8') do |file|
-			users = file.read
-			users = users.force_encoding('windows-1251')
-			users = users.split("\n\n")
-			users.each do |user|
-				user = user.split('|||')
-				puts "#{user}"
-				data_passport = @@keypair.private_decrypt(user[5])
-				if user[7].to_i > 0
-					@@list_employee.append(Employee.new(user[0], user[1], user[2], user[3], 
-						user[4], data_passport, user[6], user[7].to_i, user[8], user[9], user[10]))
-				else
-					@@list_employee.append(Employee.new(user[0], user[1], user[2], user[3], 
-						user[4], data_passport, user[6], user[7].to_i))
-				end
-			end
-		end
+		@@list_employee.read_from_file file_path
 	end
 
 	def self.show_list
-		@@list_employee.each { |obj| obj.get_full_info }
+		puts @@list_employee
 	end
 
 	def self.find_employee(name, email=nil, phone=nil, passport=nil)
