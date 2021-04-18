@@ -3,7 +3,7 @@ require_relative 'TestEmployee.rb'
 require_relative 'Employee.rb'
 require_relative 'ListEmployee.rb'
 require_relative 'TerminalView.rb'
-
+require_relative 'Validate.rb'
 
 
 if (Gem.win_platform?)
@@ -16,21 +16,21 @@ if (Gem.win_platform?)
 end
 
 
-
 TerminalViewListEmployee.append
 TerminalViewListEmployee.append
 TerminalViewListEmployee.write_to_file("write_file.txt")
 TerminalViewListEmployee.read_from_file("write_file.txt")
-print TerminalViewListEmployee.show_list
+puts TerminalViewListEmployee.show_list
+TerminalViewListEmployee
 
 
 # a = TestEmployee.new("Толстиков Илья Вадимович","22.12.1999","89183616209","Одесская 44","henuhi86@gmail.com","3333444455" , "Программист", 0)
 # puts a.get_full_info()
 
-# Tolstikov Ilya Vadimovich
+# Толстиков Илья Вадимович
 # 22.12.1999
 # 89183616209
-# Odesskay 44
+# Одесская 44
 # henuhi86@gmail.com
 # 3333444455
 # Programmer

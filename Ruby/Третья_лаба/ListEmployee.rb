@@ -18,7 +18,7 @@ class ListEmployee
 	def write_to_file(file_path)
 		File.open(file_path, 'w:UTF-8') do |file| 
 			@new_list.each do |user| 
-				passport_cipher = @@keypair.public_encrypt(user.passport.to_s)
+				passport_cipher = @keypair.public_encrypt(user.passport.to_s)
 				file.write(user.name.to_s + '|||' + user.birthday.to_s + '|||' + user.phone_number.to_s + '|||' +
 					+ user.address.to_s + '|||' + user.email.to_s + '|||' + passport_cipher.force_encoding('UTF-8') + 
 					+ '|||' + user.specialty.to_s + '|||' + user.work_experience.to_s)
@@ -33,10 +33,11 @@ class ListEmployee
 	def read_from_file(file_path)
 		File.open(file_path, 'r:UTF-8') do |file|
 			users = file.read
-			users = users.force_encoding('windows-1251')
+			users = users.force_encoding('iso-8859-1')
 			users = users.split("\n\n")
 			users.each do |user|
 				user = user.split('|||')
+				user.map! { |el|  el.force_encoding('utf-8')}
 				data_passport = @keypair.private_decrypt(user[5])
 				if user[7].to_i > 0
 					@new_list.append(Employee.new(user[0], user[1], user[2], user[3], 

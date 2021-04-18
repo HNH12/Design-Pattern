@@ -213,6 +213,7 @@ class Employee
 	end
 
 	def get_full_info
+
 		str = "#{name}, #{birthday}, #{phone_number}, #{address}, #{email}, #{passport}, #{specialty}, #{work_experience}"
 		if work_experience != 0
 			str += ", #{previous_work}, #{previous_post}, #{previous_salary}"

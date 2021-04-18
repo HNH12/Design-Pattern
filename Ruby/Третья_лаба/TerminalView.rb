@@ -2,6 +2,7 @@ require 'openssl'
 require_relative 'TestEmployee.rb'
 require_relative 'Employee.rb'
 require_relative 'ListEmployee.rb'
+require_relative 'Validate.rb'
 
 
 class TerminalViewListEmployee
@@ -41,9 +42,8 @@ class TerminalViewListEmployee
 					print "\nВведите предыдущую зарплату: "
 					previous_salary = gets.chomp().to_f
 				end
-
-				if [Employee.get_name(name), Employee.get_birthday(date), Employee.get_rus_number(phone), address,
-				 	Employee.get_email_downcase(email), Employee.get_passport(passport)].include? nil 
+				
+				if !Validate.is_employee?(name, date, phone, address, email, passport, specialty, work_experience)
 					raise TypeError
 				else
 					@@list_employee.append(Employee.new(name, date, phone, address, email, passport, specialty, work_experience, 
@@ -61,8 +61,12 @@ class TerminalViewListEmployee
 		@@list_employee.read_from_file file_path
 	end
 
+	def self.write_to_file(file_path)
+		@@list_employee.write_to_file file_path
+	end
+
 	def self.show_list
-		puts @@list_employee
+		@@list_employee.to_s
 	end
 
 	def self.find_employee(name, email=nil, phone=nil, passport=nil)
@@ -83,58 +87,7 @@ class TerminalViewListEmployee
 		Employee.return_employee_by_name name
 	end
 
-	# def self.change_employee 
-	# 	check = true
-	# 	while check
-	# 		puts 'Введите паспорт сотрудника'
-	# 		begin
-	# 			passport = Employee.get_passport gets.chomp
-	# 			(Employee.return_employee_by_passport).each do 
-	# 				puts 'Что вы хотите изменить у пользователя?'
-	# 				puts '1) ФИО','2) Телефон', '3) Email', '4) Паспорт', '5) Специальность', '6) Опыт работы'
-	# 				choose = gets.chomp
-					
-	# 			end
-	# 			check = false
-	# 		rescue => e
-	# 			e.message
-	# 		end
-	# 	end
-	# end
-
 	def close_app
 		exit(0)
 	end
-
-
-	# when '7'
-	# 			puts "\tПо какому полю вы хотите отсортировать?", "\t1. ФИО.", "\t2. Дата рождения.", 
-	# 				"\t3. Телефон.", "\t4. E-mail.", "\t5. Паспорт.", 
-	# 				"\t6. Специальность.", "\t7. Опыт работы."
-	# 			print "\tОтвет: "
-	# 			ans_sort = gets.chomp
-	# 			case ans_sort
-	# 			when '1'
-	# 				@@list_employee.sort 'fio'
-	# 			when '2'
-	# 				@@list_employee.sort 'datebirth'
-	# 			when '3'
-	# 				@@list_employee.sort 'phone_number'
-	# 			when '4'
-	# 				@@list_employee.sort 'e_mail'
-	# 			when '5'
-	# 				@@list_employee.sort 'passport'
-	# 			when '6'
-	# 				@@list_employee.sort 'specialty'
-	# 			when '7'
-	# 				@@list_employee.sort 'work_experience'
-	# 			else
-	# 				puts "\tТакого пункта нет"
-	# 			end
-	# 			puts
-	# 		when '0'
-	# 			close_app
-	# 		else
-	# 			puts 'Такого пункта нет'
-	# 		end
 end

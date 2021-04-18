@@ -1,3 +1,7 @@
+require_relative 'Validate.rb'
+
+
+
 class New_obj
 	def initialize(value)
 		self.value = value
@@ -21,8 +25,18 @@ class New_obj
 end
 
 
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
+end
+
 first_obj = New_obj.new(5)
 second_obj = New_obj.new(5)
 
+a = nil
 
-puts first_obj == second_obj
+puts Validate.is_employee? 'sd'
