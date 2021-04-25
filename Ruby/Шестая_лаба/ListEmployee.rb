@@ -1,4 +1,5 @@
 require_relative 'Employee.rb'
+require 'mysql2'
 require 'openssl'
 
 
@@ -49,6 +50,17 @@ class ListEmployee
 				end
 			end
 		end
+	end
+
+	def read_list_DB(client)
+		results = client.query("SELECT * FROM employees")
+		list_emp = ListEmployee.new()
+		results.each do |row|
+			@new_list.append(Employee.new(row['Name'], row['Birthday'].to_s, row['PhoneNumber'], row['Address'],
+								 row['Email'], row['Passport'].to_s, row['Specialty'], row['WorkExperience'],
+								 row['PreviousWork'], row['PreviousPost'], row['PreviousSalary']))
+		end
+		list_emp
 	end
 
 	def to_s

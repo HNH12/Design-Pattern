@@ -2,11 +2,17 @@ require 'openssl'
 require_relative 'TestEmployee.rb'
 require_relative 'Employee.rb'
 require_relative 'ListEmployee.rb'
+require 'mysql2'
 require_relative 'Validate.rb'
 
 
 class TerminalViewListEmployee
 	@@list_employee = ListEmployee.new()
+	@@client = Mysql2::Client.new(
+		:host => "localhost",
+		:username => "root",
+		:database => "stuff"
+	)
 	
 
 	def self.append
@@ -59,6 +65,10 @@ class TerminalViewListEmployee
 
 	def self.read_from_file(file_path)
 		@@list_employee.read_from_file file_path
+	end
+
+	def self.read_list_DB
+		@@list_employee.read_list_DB @@client
 	end
 
 	def self.write_to_file(file_path)
