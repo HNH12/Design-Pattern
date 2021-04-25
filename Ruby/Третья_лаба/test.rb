@@ -10,7 +10,7 @@ class New_obj
 	def to_s
 		return @value.to_s
 	end
-
+	
 	def value=(user_value)
 		@value = user_value
 	end
