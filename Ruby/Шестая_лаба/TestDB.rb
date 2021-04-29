@@ -8,4 +8,6 @@ TerminalViewListEmployee.set_client("localhost", "root", "stuff")
 TerminalViewListEmployee.read_list_DB
 print TerminalViewListEmployee.show_list
 
-TerminalViewListEmployee.change_node 'henuhi86@gmail.com'
+# TerminalViewListEmployee.change_node '3344 555556'
+TerminalViewListEmployee.delete_from_db '3344 555556'
+

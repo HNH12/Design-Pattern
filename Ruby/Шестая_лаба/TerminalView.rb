@@ -113,6 +113,11 @@ class TerminalViewListEmployee
 		@@list_employee.change_node(@@client, needed_emp)
 	end
 
+	def self.delete_from_db(value)
+		needed_emp = @@list_employee.find_emp value
+		@@list_employee.delete_from_db(@@client, needed_emp)
+	end
+
 	def self.close_app
 		exit(0)
 	end
