@@ -1,24 +1,11 @@
 require 'mysql2'
 require_relative 'Employee.rb'
 require_relative 'ListEmployee.rb'
+require_relative 'TerminalView.rb'
 
 
-client = Mysql2::Client.new(
-  :host => "localhost",
-  :username => "root",
-  :database => "stuff"
-)
+TerminalViewListEmployee.set_client("localhost", "root", "stuff")
+TerminalViewListEmployee.read_list_DB
+print TerminalViewListEmployee.show_list
 
-def test_select(client)
-  results = client.query("SELECT * FROM employees")
-  list_emp = ListEmployee.new()
-  results.each do |row|
-    list_emp.append(Employee.new(row['Name'], row['Birthday'].to_s, row['PhoneNumber'], row['Address'],
-      row['Email'], row['Passport'].to_s, row['Specialty'], row['WorkExperience'],
-      row['PreviousWork'], row['PreviousPost'], row['PreviousSalary']))
-  end
-  list_emp
-end
-
-
-puts (test_select client)
+TerminalViewListEmployee.change_node 'henuhi86@gmail.com'

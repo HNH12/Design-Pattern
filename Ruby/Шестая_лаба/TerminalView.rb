@@ -9,11 +9,19 @@ require_relative 'Validate.rb'
 class TerminalViewListEmployee
 	@@list_employee = ListEmployee.new()
 	@@client = Mysql2::Client.new(
-		:host => "localhost",
-		:username => "root",
-		:database => "stuff"
+		:host => 'localhost',
+		:username => 'root',
+		:database => 'stuff'
 	)
-	
+
+
+	def self.set_client(host, username, database)
+		@@client = Mysql2::Client.new(
+			:host => host,
+			:username => username,
+			:database => database
+		)
+	end
 
 	def self.append
 		is_not_appended = true
@@ -79,6 +87,18 @@ class TerminalViewListEmployee
 		@@list_employee.to_s
 	end
 
+	def self.append_to_DB
+		results = @@client.query("SELECT * FROM employees")
+		emp = nil
+		results.each do |row|
+			emp = Employee.new(row['Name'], row['Birthday'].to_s, row['PhoneNumber'], row['Address'],
+																	 row['Email'], row['Passport'].to_s, row['Specialty'], row['WorkExperience'],
+																	 row['PreviousWork'], row['PreviousPost'], row['PreviousSalary'])
+		end
+		puts emp
+		@@list_employee.add_to_DB(@@client, emp)
+	end
+
 	def self.find(data)
 		emp = @@list_employee.find_emp(data)
 		if emp == []
@@ -86,6 +106,11 @@ class TerminalViewListEmployee
 		else
 			emp
 		end
+	end
+
+	def self.change_node(value)
+		needed_emp = @@list_employee.find_emp value
+		@@list_employee.change_node(@@client, needed_emp)
 	end
 
 	def self.close_app
