@@ -19,6 +19,18 @@ class ListEmployee
 		@new_list
 	end
 
+	def read_list_YAML file_name
+		@new_list = YAML::load(File.open(file_name))
+	end
+
+	def write_list_YAML file_name
+		File.open(file_name, 'w:UTF-8') do |file|
+			file.puts(@new_list.to_yaml)
+		end
+	end
+
+	
+
 	def write_to_file(file_path)
 		File.open(file_path, 'w:UTF-8') do |file| 
 			@new_list.each do |user| 
