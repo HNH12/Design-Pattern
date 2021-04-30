@@ -29,7 +29,44 @@ class ListEmployee
 		end
 	end
 
-	
+	def read_list_JSON file_name
+		File.open(file_name, 'r:UTF-8') do |file|
+			data = JSON.parse(file.read)
+			data.each do |key, value|
+				if value["work_experience"] > 0
+					emp = Employee.new(value["name"], value["birthday"], value["phone_number"], value["address"],
+														 value["email"], value["passport"], value["specialty"], value["work_experience"],
+														 value["previous_work"], value["previous_post"], value["previous_salary"])
+				else
+					emp = Employee.new(value["name"], value["birthday"], value["phone_number"], value["address"],
+														 value["email"], value["passport"], value["specialty"], value["work_experience"])
+				end
+				add_user(emp)
+			end
+		end
+	end
+
+	def write_list_JSON file_name
+		File.open(file_name,"w:UTF-8") do |file|
+			tempHash = {}
+			@new_list.each_with_index do |emp, ind|
+				tempHash[ind] = {
+					"name": emp.name,
+					"birhtday": emp.birthday,
+					"phone_number": emp.phone_number,
+					"address": emp.address,
+					"email": emp.email,
+					"passport": emp.passport,
+					"specialty": emp.specialty,
+					"work_experience": emp.work_experience,
+					"previous_work": emp.previous_work,
+					"previous_post": emp.previous_post,
+					"previous_salary": emp.previous_salary
+				}
+			end
+			file.write(JSON.pretty_generate(tempHash))
+		end
+	end
 
 	def write_to_file(file_path)
 		File.open(file_path, 'w:UTF-8') do |file| 

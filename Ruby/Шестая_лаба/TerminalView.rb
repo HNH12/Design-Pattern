@@ -76,11 +76,27 @@ class TerminalViewListEmployee
 	end
 
 	def self.read_list_DB
-		@@list_employee.read_list_DB @@client
+		@@list_employee.read_list_DB
 	end
 
 	def self.write_to_file(file_path)
 		@@list_employee.write_to_file file_path
+	end
+
+	def self.write_to_YAML(file_path)
+		@@list_employee.write_list_YAML file_path
+	end
+
+	def self.read_YAML(file_path)
+		@@list_employee.read_list_YAML file_path
+	end
+
+	def self.read_JSON(file_path)
+		@@list_employee.read_list_JSON file_path
+	end
+
+	def self.write_JSON(file_path)
+		@@list_employee.write_list_JSON file_path
 	end
 
 	def self.show_list
@@ -88,15 +104,7 @@ class TerminalViewListEmployee
 	end
 
 	def self.append_to_DB
-		results = @@client.query("SELECT * FROM employees")
-		emp = nil
-		results.each do |row|
-			emp = Employee.new(row['Name'], row['Birthday'].to_s, row['PhoneNumber'], row['Address'],
-																	 row['Email'], row['Passport'].to_s, row['Specialty'], row['WorkExperience'],
-																	 row['PreviousWork'], row['PreviousPost'], row['PreviousSalary'])
-		end
-		puts emp
-		@@list_employee.add_to_DB(@@client, emp)
+		@@list_employee.add_to_DB(emp)
 	end
 
 	def self.find(data)
@@ -110,12 +118,12 @@ class TerminalViewListEmployee
 
 	def self.change_node(value)
 		needed_emp = @@list_employee.find_emp value
-		@@list_employee.change_node(@@client, needed_emp)
+		@@list_employee.change_node needed_emp
 	end
 
 	def self.delete_from_db(value)
 		needed_emp = @@list_employee.find_emp value
-		@@list_employee.delete_from_db(@@client, needed_emp)
+		@@list_employee.delete_from_db needed_emp
 	end
 
 	def self.close_app
