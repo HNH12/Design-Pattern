@@ -1,4 +1,5 @@
 require_relative 'Employee.rb'
+require_relative 'WorkWithDB.rb'
 require 'mysql2'
 require 'openssl'
 require 'yaml'
