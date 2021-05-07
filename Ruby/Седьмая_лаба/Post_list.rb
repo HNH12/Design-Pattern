@@ -1,11 +1,6 @@
 require_relative 'Post'
 
 
-class Department
-
-end
-
-
 class Post_list
   attr_accessor :department, :post_list
 
@@ -19,7 +14,7 @@ class Post_list
   end
 
   def choose(numb)
-    self.post_list[numb].get_full_info
+    self.post_list[numb]
   end
 end
 
@@ -31,4 +26,4 @@ end
 #
 # test_post_list.add test_post
 #
-# puts test_post_list.choose(0)
+# puts test_post_list.choose(0).get_full_info
