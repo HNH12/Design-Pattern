@@ -21,6 +21,10 @@ class Post
   def employee
     @employee.get_full_info
   end
+
+  def get_full_info
+    "#{self.post_name}, #{self.fixed_salary}, #{self.fixed_premium}, #{self.quarterly_award}, #{self.possible_bonus_percent}"
+  end
 end
 
 

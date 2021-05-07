@@ -43,13 +43,13 @@ class FixedPremium < Decorator
   end
 end
 
-class QuarterlyAward < Decorator
+class Quarterly_award < Decorator
   def get_salary
     super + @size_salary
   end
 end
 
-class PossibleBonus < Decorator
+class Possible_bonus < Decorator
   def get_salary
     super * (1 + @size_salary/100.to_f)
   end
