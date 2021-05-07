@@ -3,11 +3,15 @@ require_relative 'Employee.rb'
 require_relative 'ListEmployee.rb'
 require_relative 'TerminalView.rb'
 
-
-TerminalViewListEmployee.set_client("localhost", "root", "stuff")
+# TerminalViewListEmployee.set_client("localhost", "root", "stuff")
 # TerminalViewListEmployee.read_list_DB
-# print TerminalViewListEmployee.show_list
+# TerminalViewListEmployee.append_to_DB
+# TerminalViewListEmployee.delete_from_db '3344 555555'
 #
-# # TerminalViewListEmployee.change_node '3344 555556'
-# TerminalViewListEmployee.delete_from_db '3344 555556'
-TerminalViewListEmployee.append_to_DB
+# puts TerminalViewListEmployee.show_list
+
+# TerminalViewListEmployee.write_JSON "json_test"
+# TerminalViewListEmployee.write_to_YAML "yaml_test"
+
+
+

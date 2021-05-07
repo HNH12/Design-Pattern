@@ -1,0 +1,36 @@
+---
+- !ruby/object:Employee
+  name: Брякин Алексей Владимирович
+  birthday: '2021-03-09'
+  phone_number: 7-918-3616212
+  address: Одесская 45
+  email: henuhi81@gmail.com
+  passport: 3344 555551
+  specialty: Программист
+  work_experience: 0.0
+- !ruby/object:Employee
+  name: Толстиков Илья Вадимович
+  birthday: '1999-12-22'
+  phone_number: 7-918-3616209
+  address: Одесская 44
+  email: henuhi86@gmail.com
+  passport: 3344 555555
+  specialty: Программист
+  work_experience: 0.0
+- !ruby/object:Employee
+  name: Алексеев Алексей Алексеевич
+  birthday: '2021-03-09'
+  phone_number: 7-918-3616200
+  address: Одесская 40
+  email: henuhi86@gmail.com
+  passport: 3344 555559
+  specialty: Программист
+  work_experience: 0.0
+- !ruby/object:Employee
+  name: Иванов Иван Иванович
+  phone_number: 7-918-3667269
+  address: Одесская 22
+  email: ggggg23@gmail.com
+  passport: 2222 334455
+  specialty: Сварщик
+  work_experience: 0.0

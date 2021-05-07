@@ -71,6 +71,3 @@ class DB_work
     new_list
   end
 end
-
-
-# DB_work.DB_connection.print_p
