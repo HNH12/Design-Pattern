@@ -27,7 +27,10 @@ class Post_list
 
     if self.department != nil
       department_id = @client.query("SELECT * FROM departments WHERE DepartmentName = #{department.department_name}")
-      results = @client.query("SELECT * FROM post WHERE DepartmentID = #{department_id}")
+      results = []
+      department_id.each do |field|
+        results = @client.query("SELECT * FROM post WHERE DepartmentID = #{field['DepartmentID']}")
+      end
       results.each do |row|
         fixed_premium = row['FixedPremiumSize']
         quarterly_award = row['QuarterlyAwardSize']
