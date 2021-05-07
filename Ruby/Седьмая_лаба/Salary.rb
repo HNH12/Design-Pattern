@@ -55,18 +55,19 @@ class PossibleBonus < Decorator
   end
 end
 
-salary = Salary.new
 
-puts salary.get_salary
-
-salary = FixedSalary.new(salary,100)
-
-puts salary.get_salary
-
-salary = FixedSalary.new(salary, 12)
-
-puts salary.get_salary()
-
-salary = PossibleBonus.new(salary, 50)
-
-puts salary.get_salary
+# salary = Salary.new
+#
+# puts salary.get_salary
+#
+# salary = FixedSalary.new(salary,100)
+#
+# puts salary.get_salary
+#
+# salary = FixedSalary.new(salary, 12)
+#
+# puts salary.get_salary()
+#
+# salary = PossibleBonus.new(salary, 50)
+#
+# puts salary.get_salary
