@@ -1,4 +1,5 @@
 require_relative 'Post'
+require_relative 'WorkWithDB'
 require 'mysql2'
 
 
@@ -19,35 +20,7 @@ class Post_list
   end
 
   def read_DB
-    @client = Mysql2::Client.new(
-      :host => 'localhost',
-      :username => 'root',
-      :database => 'stuff'
-    )
-
-    if self.department != nil
-      department_id = @client.query("SELECT * FROM departments WHERE DepartmentName = #{department.department_name}")
-      results = []
-      department_id.each do |field|
-        results = @client.query("SELECT * FROM post WHERE DepartmentID = #{field['DepartmentID']}")
-      end
-      results.each do |row|
-        fixed_premium = row['FixedPremiumSize']
-        quarterly_award = row['QuarterlyAwardSize']
-        possible_bonus = row['PossibleBonusPercent']
-
-        self.post_list << (Post.new(row['PostName'], row['FixedSalary'], fixed_premium, quarterly_award, possible_bonus))
-      end
-    else
-      results = @client.query("SELECT * FROM post")
-      results.each do |row|
-        fixed_premium = row['FixedPremiumSize']
-        quarterly_award = row['QuarterlyAwardSize']
-        possible_bonus = row['PossibleBonusPercent']
-
-        self.post_list << (Post.new(row['PostName'], row['FixedSalary'], fixed_premium, quarterly_award, possible_bonus))
-      end
-    end
+    self.post_list = DB_work.DB_connection.post_list_read_db department.department_name
   end
 end
 

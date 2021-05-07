@@ -1,4 +1,5 @@
 require_relative 'Employee.rb'
+require_relative 'Post'
 require 'mysql2'
 
 
@@ -68,6 +69,37 @@ class DB_work
     						 row['Email'], row['Passport'].to_s, row['Specialty'], row['WorkExperience'],
     						 row['PreviousWork'], row['PreviousPost'], row['PreviousSalary']))
     end
+    new_list
+  end
+
+  def post_list_read_db(department_name)
+    new_list= []
+
+    if department_name != nil
+      department_id = @client.query("SELECT DepartmentID FROM departments WHERE DepartmentName = '#{department_name}'")
+
+      results = []
+      department_id.each do |field|
+        results = @client.query("SELECT * FROM post WHERE DepartmentID = #{field['DepartmentID']}")
+      end
+
+      results.each do |row|
+        fixed_premium = row['FixedPremiumSize']
+        quarterly_award = row['QuarterlyAwardSize']
+        possible_bonus = row['PossibleBonusPercent']
+        new_list << Post.new(row['PostName'], row['FixedSalary'], fixed_premium, quarterly_award, possible_bonus)
+      end
+    else
+      results = @client.query("SELECT * FROM post")
+
+      results.each do |row|
+        fixed_premium = row['FixedPremiumSize']
+        quarterly_award = row['QuarterlyAwardSize']
+        possible_bonus = row['PossibleBonusPercent']
+        new_list << Post.new(row['PostName'], row['FixedSalary'], fixed_premium, quarterly_award, possible_bonus)
+      end
+    end
+
     new_list
   end
 end
