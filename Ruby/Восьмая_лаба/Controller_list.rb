@@ -1,5 +1,6 @@
 require_relative 'Terminal_view_department_list'
 require_relative 'Department_list'
+require_relative 'Terminal_view_list'
 
 
 class Controller_list

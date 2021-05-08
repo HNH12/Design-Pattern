@@ -1,15 +1,9 @@
 require_relative 'Department_list'
+require_relative 'Terminal_view_list'
 
-class Terminal_view_department_list
+
+class Terminal_view_department_list < Terminal_view_list
   attr_accessor :department_list, :choose_instance_obj
-
-  def initialize(department_list)
-    self.department_list = department_list
-  end
-
-  def show_list
-    puts self.department_list
-  end
 
   def show_view
     puts 'Вы тут'
@@ -37,15 +31,14 @@ class Terminal_view_department_list
 end
 
 
-# test_dep = Department.new 'Отдел кадров'
-#
-# test_post_list = Post_list.new test_dep
-# test_post = Post.new('Программист', 40000, 10000, 3000, 50)
-#
-# test_post_list.add test_post
-#
-# test_dep.post_list =test_post_list
-#
-# test = Terminal_view_department_list.new test_dep
-#
-# # test.show_list
+test_dep = Department.new 'Отдел кадров'
+
+test_post_list = Post_list.new test_dep
+test_post = Post.new('Программист', 40000, 10000, 3000, 50)
+
+test_post_list.add test_post
+
+test_dep.post_list = test_post_list
+
+# Terminal_view_department_list.new(test_dep).template
+Terminal_view_department_list.new test_dep
