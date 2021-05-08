@@ -102,4 +102,8 @@ class DB_work
 
     new_list
   end
+
+  def post_id_read_db(post)
+    results = @client.query("SELECT PostID FROM post WHERE PostName = #{post}")
+  end
 end

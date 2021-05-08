@@ -128,6 +128,14 @@ class Employee
 		end
 	end
 
+  def post=(post)
+		@post = post
+	end
+
+  def post
+		@post
+	end
+
 	def phone_number
 		@phone_number
 	end
@@ -216,6 +224,9 @@ class Employee
 		str = "#{name}, #{birthday}, #{phone_number}, #{address}, #{email}, #{passport}, #{specialty}, #{work_experience}"
 		if work_experience != 0
 			str += ", #{previous_work}, #{previous_post}, #{previous_salary}"
+		end
+		if self.post != nil
+			str += ", #{post.get_full_info}"
 		end
 		str += ";\n"
 	end

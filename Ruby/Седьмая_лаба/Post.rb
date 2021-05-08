@@ -16,6 +16,7 @@ class Post
 
   def employee=(emp)
     @employee = emp
+    @employee.post = self
   end
 
   def employee
@@ -28,10 +29,10 @@ class Post
 end
 
 
-# test_emp = Employee.new('Иванов Иван Иванович', '12.12.2000', '89181112233', 'Московская 4',
-#                    'ivanov99@mail.ru', '1111334455', 'Программист', '0')
-#
-# post = Post.new('Программист', 40000, 10000, 3000, 50)
-# post.employee = test_emp
-#
-# puts post.employee
+test_emp = Employee.new('Иванов Иван Иванович', '12.12.2000', '89181112233', 'Московская 4',
+                   'ivanov99@mail.ru', '1111334455', 'Программист', '0')
+
+post = Post.new('Программист', 40000, 10000, 3000, 50)
+post.employee = test_emp
+
+puts post.employee

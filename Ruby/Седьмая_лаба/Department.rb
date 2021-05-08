@@ -39,9 +39,9 @@ end
 #
 # puts test_dep.post_list.choose(0).get_full_info
 
-test_dep = Department.new 'Отдел кадров'
-test_dep.post_list = Post_list.new test_dep
-
-test_dep.read_DB
+# test_dep = Department.new 'Отдел кадров'
+# test_dep.post_list = Post_list.new test_dep
+#
+# test_dep.read_DB
 
 puts test_dep.post_list.choose(0).get_full_info
