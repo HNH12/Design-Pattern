@@ -220,6 +220,17 @@ class Employee
 		work_experience != 0 ? @previous_salary = x.to_f : raise("Невозможно записать")
 	end
 
+  def to_s
+		str = "#{name}, #{birthday}, #{phone_number}, #{address}, #{email}, #{passport}, #{specialty}, #{work_experience}"
+		if work_experience != 0
+			str += ", #{previous_work}, #{previous_post}, #{previous_salary}"
+		end
+		if self.post != nil
+			str += ", #{post}"
+		end
+		str += ";\n"
+	end
+
 	def get_full_info
 		str = "#{name}, #{birthday}, #{phone_number}, #{address}, #{email}, #{passport}, #{specialty}, #{work_experience}"
 		if work_experience != 0

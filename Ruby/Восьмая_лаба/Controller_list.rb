@@ -4,12 +4,6 @@ require_relative 'Terminal_view_list'
 
 
 class Controller_list
-  def initialize
-    @list = Department_list.new
-    @list.read_db
-    @view_list = Terminal_view_department_list.new @list
-  end
-
   def show_list
     @view_list.show_list
   end
@@ -40,10 +34,10 @@ class Controller_list
 end
 
 
-test = Controller_list.new
-
-test.show_list
-
-test.choose_instance 0
-
-test.show_instance
+# test = Controller_list.new
+#
+# test.show_list
+#
+# test.choose_instance 0
+#
+# test.show_instance
