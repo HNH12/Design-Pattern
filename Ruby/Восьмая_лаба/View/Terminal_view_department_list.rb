@@ -1,16 +1,49 @@
-require_relative 'Department_list'
-require_relative 'Terminal_view_list'
+require_relative '../Model/Department_list'
+require_relative '../View/Terminal_view_list'
 
 
 class Terminal_view_department_list < Terminal_view_list
   attr_accessor :choose_instance_obj
 
-  def initialize(list)
-    super list
-  end
-
-  def show_view
-    puts 'Вы тут'
+  def show
+    ans = ''
+    while ans != '0'
+      puts "\n************Меню*************",
+           '1. Отобразить список отделов',
+           '2. Выбрать отдел',
+           '3. Отобразить выбранное',
+           '4. Добавить отдел',
+           '5. Удалить выбранный отдел',
+           '0. Завершить работу'
+      print 'Ответ:'
+      ans = gets.chomp
+      case ans
+      when '1'
+        puts "\n========Отделы======="
+        show_list
+      when '2'
+        print 'Введите номер отдела:'
+        num = gets.chomp.to_i
+        choose_instance num
+      when '3'
+        show_instance
+      # when '4'
+      #   add
+      #   puts 'Добавление прошло успешно'
+      when '5'
+        if @choose_instance_obj != nil
+          delete_instance
+          puts 'Удаление прошло успешно'
+          @choose_instance_obj = nil
+        else
+          puts 'Вы не выбрали отдел'
+        end
+      when '0'
+        close
+      else
+        puts 'Такого пункта нет'
+      end
+    end
   end
 
   def add_instance(*args)
@@ -18,7 +51,7 @@ class Terminal_view_department_list < Terminal_view_list
   end
 
   def choose_instance(number)
-    self.choose_instance_obj = @list.choose(number)
+    self.choose_instance_obj = @controller.choose_instance number
   end
 
   def show_instance
@@ -26,11 +59,7 @@ class Terminal_view_department_list < Terminal_view_list
   end
 
   def delete_instance
-
-  end
-
-  def close_view
-    exit 0
+    @controller.delete choose_instance_obj
   end
 end
 

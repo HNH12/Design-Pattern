@@ -1,0 +1,15 @@
+---
+- &1 !ruby/object:Department
+  department_id: 1
+  department_name: Отдел кадров
+  post_list: !ruby/object:Post_list
+    department: *1
+    post_list:
+    - !ruby/object:Post
+      post_name: Программист
+      fixed_salary: 40000
+      fixed_premium: 10000
+      quarterly_award: 3000
+      possible_bonus_percent: 50
+      salary: !ruby/object:Salary
+        salary: 0.0

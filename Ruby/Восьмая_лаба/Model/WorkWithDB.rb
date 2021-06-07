@@ -110,8 +110,12 @@ class DB_work
 
   def department_list_read_db
     new_list = []
-    results = @client.query("SELECT DepartmentName FROM departments")
-    results.each { |obj| new_list.append obj["DepartmentName"] }
+    results = @client.query("SELECT DepartmentID,DepartmentName FROM departments")
+    results.each { |obj| new_list.append [obj["DepartmentName"], obj["DepartmentID"]]}
     new_list
+  end
+
+  def delete_department(department)
+    @client.query("DELETE FROM departments WHERE DepartmentID = #{department.department_id}")
   end
 end

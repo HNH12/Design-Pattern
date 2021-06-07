@@ -1,5 +1,5 @@
 require_relative 'Terminal_view_list'
-require_relative 'ListEmployee'
+require_relative '../Model/ListEmployee'
 
 
 class Terminal_view_employee_list < Terminal_view_list
@@ -7,6 +7,14 @@ class Terminal_view_employee_list < Terminal_view_list
 
   def initialize(list)
     super list
+  end
+
+  def show
+
+  end
+
+  def show_list
+    puts list.to_s
   end
 
   def choose_instance(number)

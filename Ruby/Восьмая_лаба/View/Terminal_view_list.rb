@@ -1,11 +1,11 @@
 class Terminal_view_list
-  def initialize(list)
-    @list = list
+  def initialize(controller)
+    @controller = controller
   end
 
   def template
+    show
     show_view
-    show_list
     choose_instance('test')
     show_instance
     change_instance
@@ -13,12 +13,12 @@ class Terminal_view_list
     close
   end
 
-  def show_view
+  def show
     raise ArgumentError
   end
 
   def show_list
-    raise ArgumentError
+    puts @controller.show_list
   end
 
   def choose_instance(number)
@@ -38,6 +38,6 @@ class Terminal_view_list
   end
 
   def close
-    raise ArgumentError
+    @controller.close_view
   end
 end
