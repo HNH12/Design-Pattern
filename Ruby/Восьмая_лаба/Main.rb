@@ -11,8 +11,7 @@ class Main
   def self.main
     controller = Controller_department_list_factory.new
     controller = controller.create_controller_list
-    view = Terminal_view_department_list.new controller
-    view.show
+    controller.show_view
   end
 end
 

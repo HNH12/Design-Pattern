@@ -48,4 +48,8 @@ class Department_list
     department_list.delete_if { |x| x.department_id == department.department_id}
     DB_work.DB_connection.delete_department department
   end
+
+  def return_increment
+    department_list[department_list.size-1].department_id + 1
+  end
 end

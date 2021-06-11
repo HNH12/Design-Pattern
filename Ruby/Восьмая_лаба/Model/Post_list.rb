@@ -20,13 +20,25 @@ class Post_list
   end
 
   def read_DB
-    self.post_list = DB_work.DB_connection.post_list_read_db department.department_name
+    self.post_list = DB_work.DB_connection.post_list_read_db department
   end
 
   def to_s
     str = ""
     self.post_list.each { |obj| str += "#{obj}\n"}
     str
+  end
+
+  def return_increment
+    if post_list.size == 0
+      return 1
+    end
+      return post_list[post_list.size-1].id + 1
+  end
+
+  def delete post
+    post_list.delete_if { |x| x.id == post.id}
+    DB_work.DB_connection.delete_post post
   end
 end
 

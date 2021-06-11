@@ -2,6 +2,16 @@ require_relative '../Model/Department_list'
 require_relative '../View/Terminal_view_list'
 
 
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
+end
+
+
 class Terminal_view_department_list < Terminal_view_list
   attr_accessor :choose_instance_obj
 
@@ -27,9 +37,11 @@ class Terminal_view_department_list < Terminal_view_list
         choose_instance num
       when '3'
         show_instance
-      # when '4'
-      #   add
-      #   puts 'Добавление прошло успешно'
+      when '4'
+        print 'Введите имя: '
+        dep_name = gets.chomp
+        add dep_name
+        puts 'Добавление прошло успешно'
       when '5'
         if @choose_instance_obj != nil
           delete_instance
@@ -46,8 +58,8 @@ class Terminal_view_department_list < Terminal_view_list
     end
   end
 
-  def add_instance(*args)
-
+  def add(dep_name)
+    @controller.add dep_name
   end
 
   def choose_instance(number)
@@ -56,6 +68,7 @@ class Terminal_view_department_list < Terminal_view_list
 
   def show_instance
     puts self.choose_instance_obj
+    @controller.show_instance self.choose_instance_obj
   end
 
   def delete_instance

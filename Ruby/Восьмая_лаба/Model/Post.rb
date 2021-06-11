@@ -3,15 +3,18 @@ require_relative 'Employee'
 
 
 class Post
-  attr_accessor :post_name, :fixed_salary, :fixed_premium, :quarterly_award, :possible_bonus_percent, :salary
+  attr_accessor :id, :post_name, :fixed_salary, :fixed_premium, :quarterly_award,
+                :possible_bonus_percent, :salary,:department
 
-  def initialize(post_name, fixed_salary, fixed_premium, quarterly_award, possible_bonus_percent)
+  def initialize(id, post_name, fixed_salary, fixed_premium, quarterly_award, possible_bonus_percent, department)
+    self.id = id
     self.post_name = post_name
     self.fixed_salary = fixed_salary
     self.fixed_premium = fixed_premium
     self.quarterly_award = quarterly_award
     self.possible_bonus_percent = possible_bonus_percent
     self.salary = Salary.new
+    self.department = department
   end
 
   def employee=(emp)
@@ -24,7 +27,8 @@ class Post
   end
 
   def to_s
-    "#{self.post_name}, #{self.fixed_salary}, #{self.fixed_premium}, #{self.quarterly_award}, #{self.possible_bonus_percent}"
+    "#{self.id},#{self.post_name}, #{self.fixed_salary}, #{self.fixed_premium},
+      #{self.quarterly_award}, #{self.possible_bonus_percent}"
   end
 end
 

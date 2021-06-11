@@ -73,22 +73,19 @@ class DB_work
     new_list
   end
 
-  def post_list_read_db(department_name)
+  def post_list_read_db(department=nil)
     new_list= []
 
-    if department_name != nil
-      department_id = @client.query("SELECT DepartmentID FROM departments WHERE DepartmentName = '#{department_name}'")
+    if department != nil
 
-      results = []
-      department_id.each do |field|
-        results = @client.query("SELECT * FROM post WHERE DepartmentID = #{field['DepartmentID']}")
-      end
+      results = @client.query("SELECT * FROM post WHERE DepartmentID = #{department.department_id}")
 
       results.each do |row|
         fixed_premium = row['FixedPremiumSize']
         quarterly_award = row['QuarterlyAwardSize']
         possible_bonus = row['PossibleBonusPercent']
-        new_list << Post.new(row['PostName'], row['FixedSalary'], fixed_premium, quarterly_award, possible_bonus)
+        new_list << Post.new(row['PostID'], row['PostName'], row['FixedSalary'], fixed_premium, quarterly_award,
+                             possible_bonus,department)
       end
     else
       results = @client.query("SELECT * FROM post")
@@ -117,5 +114,23 @@ class DB_work
 
   def delete_department(department)
     @client.query("DELETE FROM departments WHERE DepartmentID = #{department.department_id}")
+  end
+
+  def add_department(department)
+    @client.query("INSERT INTO departments VALUES(#{department.department_id}, '#{department.department_name}')")
+  end
+
+  def add_post(post)
+    bool_premium = post.fixed_premium > 0 ? 1 : 0
+    bool_quarterly = post.quarterly_award > 0 ? 1 : 0
+    bool_bonus = post.possible_bonus_percent > 0 ? 1 : 0
+    @client.query("INSERT INTO post VALUES (#{post.id}, '#{post.post_name}', #{post.fixed_salary}, #{bool_premium},
+                      #{post.fixed_premium}, #{bool_quarterly}, #{post.quarterly_award}, #{bool_bonus},
+                      #{post.possible_bonus_percent}, #{post.department.department_id}, NULL)")
+
+  end
+
+  def delete_post post
+    @client.query("DELETE FROM post WHERE PostID = #{post.id}")
   end
 end
